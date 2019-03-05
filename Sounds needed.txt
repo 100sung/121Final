@@ -1,0 +1,16 @@
+SFX:
+Footsteps
+Jumping
+Damage taken
+Running(maybe a wind sound?)
+Enemy yells
+Sound for hw being picked up
+warning sound (for timer when it runs low)
+death/defeat sound
+cheering (for winning)
+basic city/town ambiance
+Click/push sound for menu
+
+BGM:
+Start screen bgm
+first level bgm (may be the same as start screen?)

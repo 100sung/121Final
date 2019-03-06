@@ -9,6 +9,8 @@ public class cameracontrol : MonoBehaviour
     public bool usedOffset;
     public float rotateSpeed;
     public Transform pivot;
+    public float minA;
+    public float maxA;
 
     // Start is called before the first frame update
     void Start()
@@ -37,13 +39,13 @@ public class cameracontrol : MonoBehaviour
         pivot.Rotate(vertical, 0, 0);
 
         // rotation lock
-        if (pivot.rotation.eulerAngles.x > 30f && pivot.rotation.eulerAngles.x < 180f)
+        if (pivot.rotation.eulerAngles.x > maxA && pivot.rotation.eulerAngles.x < 180f)
         {
-            pivot.rotation = Quaternion.Euler(30f, 0f, 0f);
+            pivot.rotation = Quaternion.Euler(maxA, 0f, 0f);
         }
-        if (pivot.rotation.eulerAngles.x > 180f && pivot.rotation.eulerAngles.x < 310f)
+        if (pivot.rotation.eulerAngles.x > 180f && pivot.rotation.eulerAngles.x < 360f + minA)
         {
-            pivot.rotation = Quaternion.Euler(310f, 0f, 0f);
+            pivot.rotation = Quaternion.Euler(360f + minA, 0f, 0f);
         }
         float desiredY = target.eulerAngles.y;
         float desiredX = pivot.eulerAngles.x;

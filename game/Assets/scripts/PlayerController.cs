@@ -12,11 +12,13 @@ public class PlayerController : MonoBehaviour
     public float gravity;
     public CharacterController control;
     private Vector3 move;
+    public Animator animate;
 
     // Start is called before the first frame update
     void Start()
     {
         control = GetComponent<CharacterController>();
+        animate = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -45,6 +47,32 @@ public class PlayerController : MonoBehaviour
             {
                 move.y = jump;
             }
+        }
+
+        //animations
+        if (Input.GetKey(KeyCode.W))
+        {
+            animate.SetBool("idle", false);
+            animate.SetBool("walkf", true);
+        }
+        //walk back
+        else if (Input.GetKey(KeyCode.S))
+        {
+            animate.SetBool("walkb", true);
+            animate.SetBool("idle", false);
+        }
+        else
+        {
+            animate.SetBool("walkf", false);
+            animate.SetBool("walkb", false);
+            animate.SetBool("runf", false);
+            animate.SetBool("runb", false);
+            animate.SetBool("idle", true);
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            animate.SetBool("idle", false);
+            animate.SetBool("jumping", true);
         }
         move.y = move.y + (Physics.gravity.y * gravity * Time.deltaTime);
         control.Move(move * Time.deltaTime);

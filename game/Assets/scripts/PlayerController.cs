@@ -1,18 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
     public float speed;
     public float run;
     public float jump;
-    public float health;
+    //public float health;
     public float timer;
     public float gravity;
     public CharacterController control;
     private Vector3 move;
     public Animator animate;
+    public Text hwText;
+    private int hw = 5;
+    public Text healthText;
+    private int health = 100;
+    public GameObject part;
+
 
     // Start is called before the first frame update
     void Start()
@@ -53,18 +60,21 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.W))
         {
             animate.SetBool("idle", false);
-            animate.SetBool("walkf", true);
+            animate.SetBool("is_walking", true);
+            animate.SetBool("Walkingf", true);
+        
         }
         //walk back
         else if (Input.GetKey(KeyCode.S))
         {
-            animate.SetBool("walkb", true);
+            animate.SetBool("is_walking", true);
+            animate.SetBool("Walkingb", true);
             animate.SetBool("idle", false);
         }
         else
         {
-            animate.SetBool("walkf", false);
-            animate.SetBool("walkb", false);
+            animate.SetBool("is_walking", false);
+            animate.SetBool("is_walking", false);
             animate.SetBool("runf", false);
             animate.SetBool("runb", false);
             animate.SetBool("idle", true);
@@ -76,5 +86,25 @@ public class PlayerController : MonoBehaviour
         }
         move.y = move.y + (Physics.gravity.y * gravity * Time.deltaTime);
         control.Move(move * Time.deltaTime);
+    }
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("hw"))
+        {
+            other.gameObject.SetActive(false);
+            hw--;
+            hwText.text = "HW Left: " + hw.ToString();
+        }
+
+        if (other.gameObject.CompareTag("enemy"))
+        {
+            //other.gameObject.SetActive(false);
+            health = health - 10;
+            healthText.text = "Health: " + health.ToString();
+        }
+        
+       
+
+        
     }
 }

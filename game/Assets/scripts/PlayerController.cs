@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public float run;
     public float jump;
-    //public float health;
+    public Text timerText;
     public float timer;
     public float gravity;
     public CharacterController control;
@@ -55,7 +55,12 @@ public class PlayerController : MonoBehaviour
                 move.y = jump;
             }
         }
-
+        //timer
+        if(timer >= 0.0f)
+        {
+            timer -= Time.deltaTime;
+            timerText.text = "Time: " + timer.ToString("F"); 
+        }
         //animations
         if (Input.GetKey(KeyCode.W))
         {

@@ -8,7 +8,7 @@ public class enemies : MonoBehaviour
 
     private float distance;
 
-
+    private Animator anim;
     Transform player;
     Vector3 randomDirection;
 
@@ -16,13 +16,14 @@ public class enemies : MonoBehaviour
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;	// Find player
+        anim = GetComponent<Animator>();
     }
 
     void Start()
     {
 
         randomDirection = new Vector3(Random.Range(-359, 359), 0, Random.Range(-359, 359));
-
+        anim.SetBool("idle", true);
     }
 
     // Update is called once per frame
@@ -35,16 +36,25 @@ public class enemies : MonoBehaviour
         distance = Vector3.Distance(player.transform.position, transform.position);
 
         // If player is too close, keep distance
-        if (distance < 7)
+        if (distance < 14)
         {
             // Charge towards player
-            transform.position += transform.forward * 5 * Time.deltaTime;
+            transform.position += transform.forward * 8 * Time.deltaTime;
+            anim.SetBool("run", true);
+            StartCoroutine(Atk());
         }
         else
         {
             randomDirection = new Vector3(Random.Range(-359, 359), 0, Random.Range(-359, 359));
+            anim.SetBool("run", false);
         }
+        
+    }
 
+    IEnumerator Atk()
+    {
+        yield return new WaitForSeconds(0.5f);
+        anim.SetBool("atk", true);
     }
 
 }
